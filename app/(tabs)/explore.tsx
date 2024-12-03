@@ -1,13 +1,36 @@
-import { StyleSheet, Image, Platform } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, Image, Platform } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Collapsible } from '@/components/Collapsible';
 
 export default function TabTwoScreen() {
+  const [value, setValue] = useState('');
+  const [commission, setCommission] = useState('0'); // Estado para la comisión
+  const [total, setTotal] = useState('0');
+
+  const handleChange = (text: string) => {
+    // Permite números y un solo punto decimal
+    const numericValue = text.replace(/[^0-9.]/g, ''); // Permite números y puntos
+    const parts = numericValue.split('.');
+    
+    // Asegura que solo haya un punto decimal
+    if (parts.length > 2) {
+      return; // Ignora el texto si hay más de un punto decimal
+    }
+
+    // Actualiza el valor
+    setValue(numericValue);
+
+    // Calcula el 5.4% y actualiza el estado de la comisión
+    const numericValueFloat = parseFloat(numericValue) || 0; // Convierte a número
+    const calculatedCommission = ((numericValueFloat * 5.4) / 100) + 0.30; // Calcula el 5.4%
+    const calculatedTotal = numericValueFloat - calculatedCommission;
+    setCommission(numericValue ? calculatedCommission.toFixed(2) : '0'); // Actualiza el estado con dos decimales
+    setTotal(numericValue ? calculatedTotal.toFixed(2) : '0'); // Actualiza el estado con dos decimales
+  };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -15,81 +38,40 @@ export default function TabTwoScreen() {
         <IconSymbol
           size={310}
           color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
+          name="arrow.up"
           style={styles.headerImage}
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">Si Envías</ThemedText>
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
+      <TextInput
+        style={styles.input}
+        value={value}
+        onChangeText={handleChange}
+        keyboardType="decimal-pad" // Muestra el teclado para decimales
+        placeholder="Ingresa un número"
+      />
+      <ThemedText type="subtitle">Comisión que pagas</ThemedText>
+      <TextInput
+        style={styles.input}
+        value={commission} // Muestra la comisión calculada
+        editable={false} // Hace que el segundo campo no sea editable
+        keyboardType="numeric" // Muestra el teclado numérico
+        placeholder="Comisión calculada"
+      />
+      <ThemedText type="subtitle">Total a enviar</ThemedText>
+      <TextInput
+        style={styles.input}
+        value={total}
+        editable={false}
+        onChangeText={handleChange}
+        keyboardType="numeric" // Muestra el teclado numérico
+        placeholder="Ingresa un número"
+      />
+      <Collapsible title='Sobre las comisiones'>
+        <ThemedText>- Las Comisiones son calculadas en base a un 5.4% + 0.30$ estipulado por Paypal</ThemedText>
+        <ThemedText>- Las Comisiones son cubiertas por el receptor, mas no por el emisor</ThemedText>
       </Collapsible>
     </ParallaxScrollView>
   );
@@ -106,4 +88,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+  container: {
+    padding: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+    borderRadius: 20,
+  }
 });
