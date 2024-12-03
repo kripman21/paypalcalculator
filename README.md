@@ -1,50 +1,34 @@
-# Welcome to your Expo app 👋
+# Proyecto Calculadora Paypal
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## El Problema
+Existen infinidad de aplicaciones para calcular comisiones de paypal, en mi caso mi principal problema era que en su mayoria estan llenas de publicidades o no funcionan offline
 
-## Get started
+## La Solución
+Por lo que decidí crear una aplicacion que funcione exactamente para lo que necesitaba, calcular comisiones sin publicidades molestas ni tener que ir a una web para hacerlo
 
-1. Install dependencies
-
+## Instalación
+Para instalar el proyecto, sigue estos pasos:
+1. Clona el repositorio: 
+   ```bash
+   git clone https://github.com/kripman21/paypalcalculator.git
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
+   cd [nombre del directorio]
+   ```
+3. Instala las dependencias:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+## Uso
+Para ejecutar el proyecto, utiliza el siguiente comando:
    ```bash
-    npx expo start
+   expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Contribuciones
+Las contribuciones son bienvenidas. Por favor, abre un issue o envía un pull request para sugerir mejoras. 
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+¡Gracias por tu interés en Calculadora Paypal!
